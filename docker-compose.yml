@@ -3,10 +3,10 @@
 services:
   loki:
     container_name: $LOKI_NAME
-    image: "$LOKI_IMAGE"
+    image: $LOKI_IMAGE
     volumes:
       - ./config/loki.yaml:/etc/loki/loki.yaml:ro
-      - ./grafana/loki-data:/loki
+      - ./loki/loki-data:/loki
     command: 
       - "--config.file=/etc/loki/loki.yaml"
     user: "root"
@@ -22,7 +22,6 @@ services:
     networks:
       network:
         ipv4_address: $LOKI_HOST
-
 
 networks:
   network:
