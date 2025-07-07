@@ -34,6 +34,10 @@ build:
 	@printf "$(OK_COLOR)==== Building configuration ${name}... ====$(NO_COLOR)\n"
 	@docker-compose -f ./docker-compose.yml up -d --build
 
+con:
+	@printf "$(YELLOW)==== Show ${name} logs... ====$(NO_COLOR)\n"
+	@docker exec -it loki sh
+
 down:
 	@printf "$(ERROR_COLOR)==== Stopping configuration ${name}... ====$(NO_COLOR)\n"
 	@docker-compose -f ./docker-compose.yml down
@@ -44,6 +48,10 @@ env:
 		rm .env; \
 	fi; \
 	cp .env.example .env; \
+
+log:
+	@printf "$(YELLOW)==== Show ${name} logs... ====$(NO_COLOR)\n"
+	@docker logs loki
 
 git:
 	@printf "$(YELLOW)==== Set user name and email to git for ${name} repo... ====$(NO_COLOR)\n"
