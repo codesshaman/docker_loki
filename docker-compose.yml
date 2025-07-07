@@ -1,0 +1,34 @@
+---
+
+services:
+  loki:
+    container_name: $LOKI_NAME
+    image: "$LOKI_IMAGE"
+    volumes:
+      - ./config/loki.yaml:/etc/loki/loki.yaml:ro
+      - ./grafana/loki-data:/loki
+    command: 
+      - "--config.file=/etc/loki/loki.yaml"
+    user: "root"
+    restart: unless-stopped
+    deploy:
+      mode: replicated
+      replicas: 1
+      update_config:
+        order: stop-first
+      resources:
+        limits:
+          memory: 1024M
+    networks:
+      network:
+        ipv4_address: $LOKI_HOST
+
+
+networks:
+  network:
+    driver: bridge
+    name: $LOKI_NETWORK
+    ipam:
+      config:
+        - subnet: $LOKI_ADDRES
+          gateway: $LOKI_GATEWAY
